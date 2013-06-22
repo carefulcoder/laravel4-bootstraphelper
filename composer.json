@@ -1,8 +1,8 @@
 {
-    "name": "tomindustries/bootstraphelper",
+    "name": "tomindustries/bootstrapblade",
     "type": "library",
-    "description": "Laravel 4 helpers for Twitter Bootstrap",
-    "keywords": ["bootstrap", "helper", "laravel", "blade"],
+    "description": "Bootstrap specific Blade extensions",
+    "keywords": ["bootstrap", "laravel", "blade"],
     "homepage": "https://carefulcoder.co.uk",
     "license": "MIT",
     "authors": [
@@ -20,7 +20,7 @@
     },
     "autoload": {
         "psr-0": {
-            "tomindustries\\bootstraphelper": "src"
+            "tomindustries\\bootstrapblade": "src"
         }
     }
 }

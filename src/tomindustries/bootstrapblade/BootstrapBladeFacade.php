@@ -5,14 +5,14 @@
  * @since 18/06/13
  */
 
-namespace tomindustries\doctorpdf;
+namespace tomindustries\bootstrapblade;
 use Illuminate\Support\Facades\Facade;
 
 /**
  * Class HelloFacade
  * @package tomindustries\psr0lib
  */
-class BootstrapHelperFacade extends Facade
+class BootstrapBladeFacade extends Facade
 {
     /**
      * Resolve our Facade to a string that corresponds to a class
@@ -22,6 +22,6 @@ class BootstrapHelperFacade extends Facade
      */
     public static function getFacadeAccessor()
     {
-        return 'bootstraphelper';
+        return 'bootstrapblade';
     }
 }
