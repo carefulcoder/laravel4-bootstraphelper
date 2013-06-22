@@ -1,0 +1,26 @@
+{
+    "name": "tomindustries/bootstraphelper",
+    "type": "library",
+    "description": "Laravel 4 helpers for Twitter Bootstrap",
+    "keywords": ["bootstrap", "helper", "laravel", "blade"],
+    "homepage": "https://carefulcoder.co.uk",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tom Verran",
+            "email": "tom@tomverran.co.uk",
+            "homepage": "https://carefulcoder.co.uk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "illuminate/support": "*",
+        "illuminate/view": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "tomindustries\\bootstraphelper": "src"
+        }
+    }
+}
