@@ -24,12 +24,15 @@ class BootstrapBladeServiceProvider extends ServiceProvider {
         $app = $this->app;
         $environment = $this->app['view'];
         $engineResolver = $environment->getEngineResolver();
-        $environment->addExtension('.boot.php', 'boot');
+        $finder = $environment->getFinder();
+        $finder->addExtension('boot.php');
+
+        $environment->addExtension('boot.php', 'boot');
 
         $engineResolver->register('boot', function() use($app)
         {
-            $cache = $app['path.storage'].'/views';
-            return new CompilerEngine(BootstrapBladeCompiler($app['files'], $cache), $app['files']);
+            $cache = $app['path.storage'].'/views/boot/';
+            return new CompilerEngine(new BootstrapBladeCompiler($app['files'], $cache), $app['files']);
         });
     }
 }
