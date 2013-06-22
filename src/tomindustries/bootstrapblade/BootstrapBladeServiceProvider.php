@@ -13,7 +13,7 @@ use Illuminate\View\Engines\CompilerEngine;
  * Class HelloServiceProvider
  * @package tomindustries\psr0lib
  */
-class BootstrapHelperServiceProvider extends ServiceProvider {
+class BootstrapBladeServiceProvider extends ServiceProvider {
 
     /**
      * Register the service provider.
