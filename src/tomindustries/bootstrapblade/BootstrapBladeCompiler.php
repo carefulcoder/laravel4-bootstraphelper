@@ -1,6 +1,6 @@
 <?php
 /**
- * Hello.php
+ * BootstrapBladeCompiler.php
  * @author Tom
  * @since 22/06/13
  */

@@ -1,8 +1,8 @@
 <?php
 /**
- * HelloServiceProvider.php
+ * BootstrapBladeServiceProvider.php
  * @author Tom
- * @since 18/06/13
+ * @since 22/06/13
  */
 
 namespace tomindustries\bootstrapblade;
@@ -24,14 +24,15 @@ class BootstrapBladeServiceProvider extends ServiceProvider {
         $app = $this->app;
         $environment = $this->app['view'];
         $engineResolver = $environment->getEngineResolver();
-        $finder = $environment->getFinder();
-        $finder->addExtension('boot.php');
 
+        //Tell Laravel how to find and what to compile the files with
+        $environment->getFinder()->addExtension('boot.php');
         $environment->addExtension('boot.php', 'boot');
 
+        //Register our new compiler engine with the 'boot' tag.
         $engineResolver->register('boot', function() use($app)
         {
-            $cache = $app['path.storage'].'/views/boot/';
+            $cache = $app['path.storage'].'/views';
             return new CompilerEngine(new BootstrapBladeCompiler($app['files'], $cache), $app['files']);
         });
     }
