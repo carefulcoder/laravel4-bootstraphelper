@@ -5,13 +5,13 @@
  * @since 22/06/13
  */
 
-namespace tomindustries\bootstrapblade;
+namespace carefulcoder\bootstrapblade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Engines\CompilerEngine;
 
 /**
  * Class HelloServiceProvider
- * @package tomindustries\psr0lib
+ * @package carefulcoder\bootstrapblade
  */
 class BootstrapBladeServiceProvider extends ServiceProvider {
 
