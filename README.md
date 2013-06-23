@@ -13,10 +13,10 @@ a project I'm working on I'll update the library as and when I need to but I'd a
 
 Because <del>I'm terrible at regular expressions</del> the syntax I've used is quite different to Blade I've decided
 to use the percent sign (%) to denote Bootstrap shortcuts rather than Blade's @. You can change it back in
-BootstrapBladeCompiler.php by setting $this->bootstrapSymbol.
+BootstrapBladeCompiler.php by setting `$this->bootstrapSymbol`.
 
 If you want to try the package out then go to https://carefulcoder.co.uk/composer and follow the instructions to add the repo.
-You can then add something along the lines of  "carefulcoder/bootstrapblade": "*" to your composer.json file.
+You can then add something along the lines of  `"carefulcoder/bootstrapblade": "*"` to your composer.json file.
 I haven't put this on Packagist yet because it isn't really ready.
 
 Examples
@@ -33,17 +33,17 @@ To include Bootstrap's CSS:
 
 Output:
 
-    <link media="all" type="text/css" rel="stylesheet" href="http://localhost/newsletters/public/bootstrap/css/bootstrap.min.css">
-    <link media="all" type="text/css" rel="stylesheet" href="http://localhost/newsletters/public/bootstrap/css/bootstrap-responsive.css">
+    <link media="all" type="text/css" rel="stylesheet" href="http://localhost/public/bootstrap/css/bootstrap.min.css">
+    <link media="all" type="text/css" rel="stylesheet" href="http://localhost/public/bootstrap/css/bootstrap-responsive.css">
 
 To include Bootstrap's JS:
 
     %foot [no-jquery]
 
-Output (assuming no-jquery wasn't set):
+Output (assuming no-jquery wasn't set and you're on localhost):
 
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
-    <script src="http://localhost/newsletters/public/bootstrap/js/bootstrap.min.js"></script>
+    <script src="http://localhost/public/bootstrap/js/bootstrap.min.js"></script>
 
 To create a modal dialogue:
 
