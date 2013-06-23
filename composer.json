@@ -1,7 +1,7 @@
 {
-    "name": "tomindustries/bootstrapblade",
+    "name": "carefulcoder/bootstrapblade",
     "type": "library",
-    "description": "Bootstrap specific Blade extensions",
+    "description": "Bootstrap specific Blade extensions for Laravel 4",
     "keywords": ["bootstrap", "laravel", "blade"],
     "homepage": "https://carefulcoder.co.uk",
     "license": "MIT",
