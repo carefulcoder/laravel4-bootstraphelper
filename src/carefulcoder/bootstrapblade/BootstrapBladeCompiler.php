@@ -14,7 +14,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
      * @var array Compiler functions to add to Blade.
      */
     protected $bootstrapCommands = array(
-        'modal', 'head', 'nav', 'cta', 'hero', 'foot'
+        'modal', 'head', 'nav', 'cta', 'hero', 'foot', 'errors'
     );
 
     /**
@@ -129,42 +129,45 @@ class BootstrapBladeCompiler extends BladeCompiler {
     }
 
     /**
-     * Replace %nav name, [elements...] With a dark navbar
+     * Replace %nav name, element-variable With a dark navbar
      * @param String $name Name of the app
+     * @param $array  array of Name=>URL
      * @return string
      */
-    protected function compileNav($name)
+    protected function compileNav($name, $array=null)
     {
         $args = func_get_args();
         array_shift($args);
 
-        $nav = '<div class="navbar navbar-inverse navbar-fixed-top">
-          <div class="navbar-inner">
-            <div class="container">
+        return '
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
 
-              <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
-              <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </a>
+                    <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
 
-              <!-- Be sure to leave the brand out there if you want it shown -->
-              <a class="brand" href="#">'.$name.'</a>
+                    <!-- Be sure to leave the brand out there if you want it shown -->
+                    <a class="brand" href="{{ URL::to("/") }}">' . $name . '</a>
 
-              <!-- Everything you want hidden at 940px or less, place within here -->
-              <div class="nav-collapse collapse"><ul class="nav">';
-
-                foreach ($args as $data) {
-                    $parts = explode('->', $data);
-                    if (count($parts) == 2) {
-                        $nav .= '<li><a href="{{ URL::to("'.trim($parts[1]).'") }}">'.trim($parts[0]).'</a></li>';
-                    }
-                }
-
-              return $nav . '</ul></div>
+                    <!-- Everything you want hidden at 940px or less, place within here -->
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            @if (isset('.$array.') && is_array('.$array.'))
+                                @foreach ('.$array.' as $name=>$url)
+                                    <li {{ URL::to($url) == URL::current() ? "class=\"active\"" : "" }}>
+                                        <a href="{{{ URL::to($url) }}}">{{{ $name }}}</a>
+                                    </li>
+                                @endforeach
+                            @endif
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>';
     }
 
@@ -209,5 +212,22 @@ class BootstrapBladeCompiler extends BladeCompiler {
             <h1>'.$text.'</h1>
             <p>'.$subtext.'</p>
         </div>';
+    }
+
+    /**
+     * Display errors based on the contents of the given array.
+     * @param string $iterable A PHP variable name Blade can @foreach over.
+     * @return string
+     */
+    protected function compileErrors($iterable)
+    {
+        return '
+            @if (isset('.$array.') && is_array('.$array.'))
+                @foreach('.$iterable.' as $error)
+                    <div class="alert alert-danger">
+                        {{{ $error }}}<a class="close" data-dismiss="alert" href="#">&times;</a>
+                    </div>
+                @endforeach
+            @endif';
     }
 }

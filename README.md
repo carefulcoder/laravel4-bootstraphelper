@@ -91,8 +91,9 @@ Output:
     </div>
 
 To create a fixed navbar of links (don't forget to add 60px padding to the top of your page to compensate):
+(where $arrayOfLinks = array("Home"=>"location"))
 
-    %nav App Name, Link Name -> location
+    %nav App Name, $arrayOfLinks
 
 Output (if you're on localhost):
 
@@ -108,7 +109,7 @@ Output (if you're on localhost):
                 </a>
 
                 <!-- Be sure to leave the brand out there if you want it shown -->
-                <a class="brand" href="#">My Bootstrap App</a>
+                <a class="brand" href="http://localhost/public/index.php">My Bootstrap App</a>
 
                 <!-- Everything you want hidden at 940px or less, place within here -->
                 <div class="nav-collapse collapse">
@@ -130,3 +131,13 @@ Output:
         <h1>title</h1>
         <p>caption</p>
     </div>
+
+To display a series of error popups based on the contents of an array:
+
+    %errors $arrayOfErrors
+
+Output:
+(where $arrayOfErrors = array('Oh noes', 'Another problem'))
+
+    <div class="alert alert-danger">Oh noes<a class="close" data-dismiss="alert" href="#">×</a></div>
+    <div class="alert alert-danger">Another problem<a class="close" data-dismiss="alert" href="#">×</a></div>
