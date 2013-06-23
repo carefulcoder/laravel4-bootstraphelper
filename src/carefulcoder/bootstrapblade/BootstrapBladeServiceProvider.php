@@ -1,16 +1,11 @@
 <?php
-/**
- * BootstrapBladeServiceProvider.php
- * @author Tom
- * @since 22/06/13
- */
 
 namespace carefulcoder\bootstrapblade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Engines\CompilerEngine;
 
 /**
- * Class HelloServiceProvider
+ * Class BootstrapBladeServiceProvider
  * @package carefulcoder\bootstrapblade
  */
 class BootstrapBladeServiceProvider extends ServiceProvider {

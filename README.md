@@ -15,7 +15,9 @@ Because <del>I'm terrible at regular expressions</del> the syntax I've used is q
 to use the percent sign (%) to denote Bootstrap shortcuts rather than Blade's @. You can change it back in
 BootstrapBladeCompiler.php by setting $this->bootstrapSymbol.
 
-If you want to try the package out then add the following to your composer.json file:
+If you want to try the package out then go to https://carefulcoder.co.uk/composer and follow the instructions to add the repo.
+You can then add something along the lines of  "carefulcoder/bootstrapblade": "*" to your composer.json file.
+I haven't put this on Packagist yet because it isn't really ready.
 
 Examples
 --------

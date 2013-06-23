@@ -1,9 +1,5 @@
 <?php
-/**
- * BootstrapBladeCompiler.php
- * @author Tom
- * @since 22/06/13
- */
+
 namespace carefulcoder\bootstrapblade;
 use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\Filesystem\Filesystem;
@@ -126,7 +122,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
                 @yield("'.$viewNs.'-content")
             </div>
             <div class="modal-footer">
-                <a href="#" class="btn">Close</a>
+                <a href="#" data-dismiss="modal" class="btn">Close</a>
                 @yield("'.$viewNs.'-footer")
             </div>
         </div>';
