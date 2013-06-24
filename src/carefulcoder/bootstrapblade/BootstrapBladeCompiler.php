@@ -41,11 +41,13 @@ class BootstrapBladeCompiler extends BladeCompiler {
     /**
      * Remove quotes from a string and strtolower it.
      * @param String $string The string to remove quotes from.
+     * @param bool $lowercase Force the string to be lowercase?
      * @return String the de-quoted string.
      */
-    private static function normaliseArg($string)
+    private static function normaliseArg($string, $lowercase = true)
     {
-        return strtolower(str_replace(array('"', '"'), '', $string));
+        $noquotes = str_replace(array('"', '"'), '', $string);
+        return $lowercase ? strtolower($noquotes) : $noquotes;
     }
 
     /**
@@ -122,18 +124,18 @@ class BootstrapBladeCompiler extends BladeCompiler {
         $viewNs = end($parts);
 
         return  '
-        @include("'.$view.'")
+        @include('.$view.')
         <div id="{{{ '.$id.' }}}" class="modal hide fade">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                @yield("'.$viewNs.'-header")
+                @yield("'.self::normaliseArg($viewNs, false).'-header")
             </div>
             <div class="modal-body">
-                @yield("'.$viewNs.'-content")
+                @yield("'.self::normaliseArg($viewNs, false).'-content")
             </div>
             <div class="modal-footer">
                 <a href="#" data-dismiss="modal" class="btn">Close</a>
-                @yield("'.$viewNs.'-footer")
+                @yield("'.self::normaliseArg($viewNs, false).'-footer")
             </div>
         </div>';
     }
