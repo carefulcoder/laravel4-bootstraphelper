@@ -20,7 +20,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
     /**
      * @var string Symbol to prefix commands with.
      */
-    protected $bootstrapSymbol = '%';
+    protected $bootstrapSymbol = '@';
 
     /**
      * @var string Path of Bootstrap media relative to the public folder.
@@ -36,6 +36,16 @@ class BootstrapBladeCompiler extends BladeCompiler {
     {
         parent::__construct($files, $cachePath);
         $this->compilers = array_merge(array('BootstrapRegex'), $this->compilers);
+    }
+
+    /**
+     * Remove quotes from a string and strtolower it.
+     * @param String $string The string to remove quotes from.
+     * @return String the de-quoted string.
+     */
+    private static function normaliseArg($string)
+    {
+        return strtolower(str_replace(array('"', '"'), '', $string));
     }
 
     /**
@@ -55,7 +65,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
             if (method_exists($this, $methodName)) {
 
                 //find all instances of our command and the arguments provided with a simple regex.
-                preg_match_all('/'.preg_quote($this->bootstrapSymbol.$command) . ' ?([^\n\r]*)/i', $view, $matches);
+                preg_match_all('/'.preg_quote($this->bootstrapSymbol.$command) . '\(([^\)]*)\)/i', $view, $matches);
 
                 //replace the matched commands with compiled output
                 foreach (array_unique($matches[0]) as $index=>$match) {
@@ -68,7 +78,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
     }
 
     /**
-     * Replace %head [responsive] with links for styles
+     * Replace %head(["responsive"]) with links for styles
      * @param null $responsive Whether to include responsive styles.
      * @internal param string $view The view compiled so far.
      * @return mixed The compiled view.
@@ -79,7 +89,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
         $ret = "{{ HTML::style('{$this->bootstrapPath}css/bootstrap.min.css') }}";
 
         //append responsive styles?
-        if ($responsive) {
+        if (self::normaliseArg($responsive) == "responsive") {
             $ret .= "{{ HTML::style('{$this->bootstrapPath}css/bootstrap-responsive.css') }}";
         }
 
@@ -94,7 +104,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
     protected function compileFoot($omitJquery = null)
     {
         $ret = "{{ HTML::script('bootstrap/js/bootstrap.min.js') }}";
-        if ($omitJquery != 'no-jquery') {
+        if (self::normaliseArg($omitJquery) != 'no-jquery') {
             $ret = "{{ HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js') }}" . $ret;
         }
         return $ret;
@@ -113,7 +123,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
 
         return  '
         @include("'.$view.'")
-        <div id="'.$id.'" class="modal hide fade">
+        <div id="{{{ '.$id.' }}}" class="modal hide fade">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 @yield("'.$viewNs.'-header")
@@ -152,7 +162,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
                     </a>
 
                     <!-- Be sure to leave the brand out there if you want it shown -->
-                    <a class="brand" href="{{ URL::to("/") }}">' . $name . '</a>
+                    <a class="brand" href="{{ URL::to("/") }}">{{{' . $name . '}}}</a>
 
                     <!-- Everything you want hidden at 940px or less, place within here -->
                     <div class="nav-collapse collapse">
@@ -209,8 +219,8 @@ class BootstrapBladeCompiler extends BladeCompiler {
     {
         return '
         <div class="hero-unit">
-            <h1>'.$text.'</h1>
-            <p>'.$subtext.'</p>
+            <h1>{{{ '.$text.' }}}</h1>
+            <p>{{{ '.$subtext.' }}}</p>
         </div>';
     }
 
@@ -222,7 +232,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
     protected function compileErrors($iterable)
     {
         return '
-            @if (isset('.$array.') && is_array('.$array.'))
+            @if (isset('.$iterable.') && is_array('.$iterable.'))
                 @foreach('.$iterable.' as $error)
                     <div class="alert alert-danger">
                         {{{ $error }}}<a class="close" data-dismiss="alert" href="#">&times;</a>

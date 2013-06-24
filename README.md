@@ -8,12 +8,7 @@ it "compiles" down to an unholy mixture of HTML and Blade which is then compiled
 Files using this compiler should have the extension .boot.php.
 
 I'm nowhere near done adding even the basic bootstrap elements and what I *have* done does need some improving,
-particularly the nav element which only supports very basic hardcoded links at the moment. Since this is for
-a project I'm working on I'll update the library as and when I need to but I'd absolutely love some help :)
-
-Because <del>I'm terrible at regular expressions</del> the syntax I've used is quite different to Blade I've decided
-to use the percent sign (%) to denote Bootstrap shortcuts rather than Blade's @. You can change it back in
-BootstrapBladeCompiler.php by setting `$this->bootstrapSymbol`.
+Since this is for a project I'm working on I'll update the library as and when I need to but I'd absolutely love some help :)
 
 If you want to try the package out then go to https://carefulcoder.co.uk/composer and follow the instructions to add the repo.
 You can then add something along the lines of  `"carefulcoder/bootstrapblade": "*"` to your composer.json file.
@@ -22,14 +17,12 @@ I haven't put this on Packagist yet because it isn't really ready.
 Examples
 --------
 
-The basic syntax of these commands currently is %commandname arg1, arg2, arg3. Strings don't need to be quoted.
-This is definitely a design choice and absolutely in no way because I spent ages failing at writing better regexes.
-
+The basic syntax of these commands the same as you'd get with Blade in that its @command("string", $var, etc)
 Optional parameters are shown with their possible values within brackets in these examples.
 
 To include Bootstrap's CSS:
 
-    %head [responsive]
+    @head([responsive])
 
 Output:
 
@@ -38,7 +31,7 @@ Output:
 
 To include Bootstrap's JS:
 
-    %foot [no-jquery]
+    @foot([no-jquery])
 
 Output (assuming no-jquery wasn't set and you're on localhost):
 
@@ -47,7 +40,7 @@ Output (assuming no-jquery wasn't set and you're on localhost):
 
 To create a modal dialogue:
 
-    %modal id, path/to/view
+    @modal(id, path/to/view)
 
 Output (I've shown the output before it is compiled by Blade rather than final HTML for this one to demonstrate what it does):
 Note that the view given should have {name}-header, {name}-content and {name}-footer @sections within it.
@@ -69,7 +62,7 @@ Note that the view given should have {name}-header, {name}-content and {name}-fo
 
 To create a basic full width Call to Action:
 
-    %cta call text, button caption, button href
+    @cta(call text, button caption, button href)
 
 Output:
 
@@ -93,7 +86,7 @@ Output:
 To create a fixed navbar of links (don't forget to add 60px padding to the top of your page to compensate):
 (where $arrayOfLinks = array("Home"=>"location"))
 
-    %nav App Name, $arrayOfLinks
+    @nav(App Name, $arrayOfLinks)
 
 Output (if you're on localhost):
 
@@ -123,7 +116,7 @@ Output (if you're on localhost):
 
 To create a hero element with a title & caption:
 
-    %hero title, caption
+    @hero(title, caption)
 
 Output:
 
@@ -134,7 +127,7 @@ Output:
 
 To display a series of error popups based on the contents of an array:
 
-    %errors $arrayOfErrors
+    @errors($arrayOfErrors)
 
 Output:
 (where $arrayOfErrors = array('Oh noes', 'Another problem'))
