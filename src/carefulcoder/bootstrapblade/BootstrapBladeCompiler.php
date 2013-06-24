@@ -198,11 +198,11 @@ class BootstrapBladeCompiler extends BladeCompiler {
                 <div class="well">
                     <div class="row-fluid">
                         <div class="span9">
-                            <h4>'.$text.'</h4>
+                            <h4>{{{ '.$text.' }}}</h4>
                         </div>
                         <div class="span3">
-                            <a href="'.$buttonHref.'" role="button" class="btn btn-success btn-large btn-block" data-toggle="modal">
-                                '.$buttonText.'&nbsp; <i class="icon-white icon-arrow-right"></i>
+                            <a href="{{{ '.$buttonHref.' }}}" role="button" class="btn btn-success btn-large btn-block" data-toggle="modal">
+                            {{{ ' .$buttonText.' }}} &nbsp; <i class="icon-white icon-arrow-right"></i>
                             </a>
                         </div>
                     </div>
