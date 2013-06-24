@@ -46,7 +46,7 @@ Output (I've shown the output before it is compiled by Blade rather than final H
 Note that the view given should have {name}-header, {name}-content and {name}-footer @sections within it.
 
     @include("/path/to/view")
-    <div id="id" class="modal hide fade">
+    <div id="{{{ id }}}" class="modal hide fade">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             @yield("view-header")
