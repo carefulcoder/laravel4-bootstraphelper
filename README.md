@@ -1,6 +1,8 @@
 Twitter Bootstrap view shortcuts for Laravel 4
 ==============================================
 
+[![Build Status](https://travis-ci.org/carefulcoder/laravel4-bootstraphelper.png?branch=master)](https://travis-ci.org/carefulcoder/laravel4-bootstraphelper)
+
 This is an extra compiler for Laravel 4 views to enable some shortcuts for common Bootstrap elements.
 It works in broadly the same way as Laravel's Blade templating engine but instead of compiling down to PHP
 it "compiles" down to an unholy mixture of HTML and Blade which is then compiled by the Blade compiler.
