@@ -18,11 +18,6 @@ class BootstrapBladeCompiler extends BladeCompiler {
     );
 
     /**
-     * @var string Symbol to prefix commands with.
-     */
-    protected $bootstrapSymbol = '@';
-
-    /**
      * @var string Path of Bootstrap media relative to the public folder.
      */
     protected $bootstrapPath = 'bootstrap/';
@@ -67,11 +62,17 @@ class BootstrapBladeCompiler extends BladeCompiler {
             if (method_exists($this, $methodName)) {
 
                 //find all instances of our command and the arguments provided with a simple regex.
-                preg_match_all('/'.preg_quote($this->bootstrapSymbol.$command) . '\(([^\)]*)\)/i', $view, $matches);
+                preg_match_all($this->createMatcher($command).'i', $view, $matches);
 
                 //replace the matched commands with compiled output
                 foreach (array_unique($matches[0]) as $index=>$match) {
-                    $args = array_map('trim', explode(',', $matches[1][$index]));
+
+                    $strArgs = $matches[2][$index];
+                    $leftBracket = strpos($strArgs, '(');
+                    $rightBracket = strrpos($strArgs, ')');
+                    $strArgs = substr($strArgs, $leftBracket + 1, $rightBracket - ($leftBracket + 1));
+
+                    $args = array_map('trim', explode(',', $strArgs));
                     $view = str_replace($matches[0], call_user_func_array(array($this, $methodName), $args), $view);
                 }
             }

@@ -4,7 +4,7 @@
  * @author Tom
  * @since 24/06/13
  */
-require("../vendor/autoload.php");
+require("vendor/autoload.php");
 
 use carefulcoder\bootstrapblade\BootstrapBladeCompiler;
 use Illuminate\Filesystem\Filesystem;
@@ -94,6 +94,21 @@ class BootstrapBladeCompilerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(str_replace(' ', '', $expected), str_replace(' ', '',self::$instance->compileString('@modal("id", "/path/to/view")')));
     }
 
+    /**
+     * Make sure that parenthesis are handled properly.
+     * Suffice to say this is a test bourne of experience.
+     */
+    public function testParenthesisInArgs()
+    {
+        $expected = '<?php if (isset($test->getSomeArgs()) && is_array($test->getSomeArgs())): ?>
+                        <?php foreach($test->getSomeArgs() as $error): ?>
+                            <div class="alert alert-danger">
+                                <?php echo e($error); ?><a class="close" data-dismiss="alert" href="#">&times;</a>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>';
 
-
+        $output = self::$instance->compileString('@errors($test->getSomeArgs())');
+        $this->assertEquals(str_replace(' ', '', trim($expected)), str_replace(' ', '', trim($output)));
+    }
 }

@@ -5,8 +5,6 @@ This is an extra compiler for Laravel 4 views to enable some shortcuts for commo
 It works in broadly the same way as Laravel's Blade templating engine but instead of compiling down to PHP
 it "compiles" down to an unholy mixture of HTML and Blade which is then compiled by the Blade compiler.
 
-Files using this compiler should have the extension .boot.php.
-
 I'm nowhere near done adding even the basic bootstrap elements and what I *have* done does need some improving,
 Since this is for a project I'm working on I'll update the library as and when I need to but I'd absolutely love some help :)
 
