@@ -101,7 +101,7 @@ class BootstrapBladeCompilerTest extends PHPUnit_Framework_TestCase
      */
     public function testParenthesisInArgs()
     {
-        $expected = '<?php if (isset($test->getSomeArgs()) && is_array($test->getSomeArgs())): ?>
+        $expected = '<?php if (is_array($test->getSomeArgs())): ?>
                         <?php foreach($test->getSomeArgs() as $error): ?>
                             <div class="alert alert-danger">
                                 <?php echo e($error); ?><a class="close" data-dismiss="alert" href="#">&times;</a>
