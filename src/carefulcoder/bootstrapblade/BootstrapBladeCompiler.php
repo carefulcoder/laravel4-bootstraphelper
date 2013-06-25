@@ -41,7 +41,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
      */
     private static function normaliseArg($string, $lowercase = true)
     {
-        $noquotes = str_replace(array('"', '"'), '', $string);
+        $noquotes = str_replace(array('"', "'"), '', $string);
         return $lowercase ? strtolower($noquotes) : $noquotes;
     }
 
