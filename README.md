@@ -14,6 +14,9 @@ If you want to try the package out then go to https://carefulcoder.co.uk/compose
 You can then add something along the lines of  `"carefulcoder/bootstrapblade": "*"` to your composer.json file.
 I haven't put this on Packagist yet because it isn't really ready.
 
+Once you've downloaded the Composer package you'll want to add the following *at the end* of your providers array in app.config
+    'carefulcoder\bootstrapblade\BootstrapBladeServiceProvider',
+
 Examples
 --------
 

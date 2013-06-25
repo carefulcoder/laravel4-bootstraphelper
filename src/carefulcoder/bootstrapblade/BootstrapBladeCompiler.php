@@ -170,7 +170,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
                     <!-- Everything you want hidden at 940px or less, place within here -->
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            @if (isset('.$array.') && is_array('.$array.'))
+                            @if (is_array('.$array.'))
                                 @foreach ('.$array.' as $name=>$url)
                                     <li {{ URL::to($url) == URL::current() ? "class=\"active\"" : "" }}>
                                         <a href="{{{ URL::to($url) }}}">{{{ $name }}}</a>
@@ -199,11 +199,11 @@ class BootstrapBladeCompiler extends BladeCompiler {
                 <div class="well">
                     <div class="row-fluid">
                         <div class="span9">
-                            <h4>'.$text.'</h4>
+                            <h4>{{{ '.$text.' }}}</h4>
                         </div>
                         <div class="span3">
-                            <a href="'.$buttonHref.'" role="button" class="btn btn-success btn-large btn-block" data-toggle="modal">
-                                '.$buttonText.'&nbsp; <i class="icon-white icon-arrow-right"></i>
+                            <a href="{{{ '.$buttonHref.' }}}" role="button" class="btn btn-success btn-large btn-block" data-toggle="modal">
+                                {{{ '.$buttonText.' }}} &nbsp; <i class="icon-white icon-arrow-right"></i>
                             </a>
                         </div>
                     </div>
@@ -235,7 +235,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
     protected function compileErrors($iterable)
     {
         return '
-            @if (isset('.$iterable.') && is_array('.$iterable.'))
+            @if (is_array('.$iterable.'))
                 @foreach('.$iterable.' as $error)
                     <div class="alert alert-danger">
                         {{{ $error }}}<a class="close" data-dismiss="alert" href="#">&times;</a>

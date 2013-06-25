@@ -4,7 +4,8 @@
  * @author Tom
  * @since 24/06/13
  */
-require("vendor/autoload.php");
+$s = DIRECTORY_SEPARATOR; //run from whichever working dir you want!
+require(dirname(__FILE__)."{$s}..{$s}vendor{$s}autoload.php");
 
 use carefulcoder\bootstrapblade\BootstrapBladeCompiler;
 use Illuminate\Filesystem\Filesystem;
