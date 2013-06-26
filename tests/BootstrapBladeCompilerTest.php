@@ -112,4 +112,22 @@ class BootstrapBladeCompilerTest extends PHPUnit_Framework_TestCase
         $output = self::$instance->compileString('@errors($test->getSomeArgs())');
         $this->assertEquals(str_replace(' ', '', trim($expected)), str_replace(' ', '', trim($output)));
     }
+
+    /**
+     * Test arguments with commas in them
+     * (like array literals)
+     */
+    public function testCommasInArgs()
+    {
+        $expected = '<?php if (is_array(array("bob","bob2"))): ?>
+                        <?php foreach(array("bob", "bob2") as $error): ?>
+                            <div class="alert alert-danger">
+                                <?php echo e($error); ?><a class="close" data-dismiss="alert" href="#">&times;</a>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>';
+
+        $output = self::$instance->compileString('@errors(array("bob", "bob2"))');
+        $this->assertEquals(str_replace(' ', '', trim($expected)), str_replace(' ', '', trim($output)));
+    }
 }

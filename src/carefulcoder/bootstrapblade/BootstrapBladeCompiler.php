@@ -70,10 +70,33 @@ class BootstrapBladeCompiler extends BladeCompiler {
                     $strArgs = $matches[2][$index];
                     $leftBracket = strpos($strArgs, '(');
                     $rightBracket = strrpos($strArgs, ')');
-                    $strArgs = substr($strArgs, $leftBracket + 1, $rightBracket - ($leftBracket + 1));
+                    $strArgs = trim(substr($strArgs, $leftBracket + 1, $rightBracket - ($leftBracket + 1)));
 
-                    $args = array_map('trim', explode(',', $strArgs));
-                    $view = str_replace($matches[0], call_user_func_array(array($this, $methodName), $args), $view);
+                    $bracketDepth = 0;
+                    $chargs = str_split($strArgs);
+                    $argArray = array('');
+
+                    //go through letter by letter splitting arguments on commas
+                    //only if we're not in a nested set of brackets
+                    foreach ($chargs as $char) {
+                        if (in_array($char, array('(', '['))) {
+                            $bracketDepth++;
+                        } else if (in_array($char, array(')', ']'))) {
+                            $bracketDepth--;
+                        } else if ($char == ',' && $bracketDepth == 0) {
+                            $argArray[] = '';
+                            continue;
+                        }
+
+                        $argArray[count($argArray)-1] .= $char;
+                    }
+
+                   if ($bracketDepth == 0) {
+                       $view = str_replace($matches[0], call_user_func_array(array($this, $methodName), $argArray), $view);
+                   } else {
+                       trigger_error('Error parsing arguments for command '.$matches[0], E_WARNING);
+                       $view = str_replace($matches[0], '' , $view); //don't want to show broken commands
+                   }
                 }
             }
         }
@@ -81,7 +104,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
     }
 
     /**
-     * Replace %head(["responsive"]) with links for styles
+     * Replace @head(["responsive"]) with links for styles
      * @param null $responsive Whether to include responsive styles.
      * @internal param string $view The view compiled so far.
      * @return mixed The compiled view.
@@ -100,7 +123,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
     }
 
     /**
-     * Replace %foot [no-jquery] with Bootstrap JS and JQuery from the Google CDN unless no-jquery is set.
+     * Replace @foot [no-jquery] with Bootstrap JS and JQuery from the Google CDN unless no-jquery is set.
      * @param null $omitJquery Whether to not bother including JQuery. Either null or "no-jquery"
      * @return string
      */
@@ -142,12 +165,13 @@ class BootstrapBladeCompiler extends BladeCompiler {
     }
 
     /**
-     * Replace %nav name, element-variable With a dark navbar
+     * Replace @nav name, element-variable With a dark navbar
      * @param String $name Name of the app
      * @param $array  array of Name=>URL
+     * @param null $rightArray
      * @return string
      */
-    protected function compileNav($name, $array=null)
+    protected function compileNav($name, $array = null, $rightArray = null)
     {
         $args = func_get_args();
         array_shift($args);
@@ -172,6 +196,15 @@ class BootstrapBladeCompiler extends BladeCompiler {
                         <ul class="nav">
                             @if (is_array('.$array.'))
                                 @foreach ('.$array.' as $name=>$url)
+                                    <li {{ URL::to($url) == URL::current() ? "class=\"active\"" : "" }}>
+                                        <a href="{{{ URL::to($url) }}}">{{{ $name }}}</a>
+                                    </li>
+                                @endforeach
+                            @endif
+                        </ul>
+                        <ul class="nav pull-right">
+                            @if (is_array('.$rightArray.'))
+                                @foreach ('.$rightArray.' as $name=>$url)
                                     <li {{ URL::to($url) == URL::current() ? "class=\"active\"" : "" }}>
                                         <a href="{{{ URL::to($url) }}}">{{{ $name }}}</a>
                                     </li>
