@@ -94,7 +94,7 @@ class BootstrapBladeCompiler extends BladeCompiler {
                    if ($bracketDepth == 0) {
                        $view = str_replace($matches[0], call_user_func_array(array($this, $methodName), $argArray), $view);
                    } else {
-                       trigger_error('Error parsing arguments for command '.$matches[0], E_WARNING);
+                       trigger_error('Missing '.$bracketDepth.' closing bracket(s) / parenthesis in '.$match, E_USER_WARNING);
                        $view = str_replace($matches[0], '' , $view); //don't want to show broken commands
                    }
                 }

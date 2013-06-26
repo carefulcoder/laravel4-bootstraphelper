@@ -87,9 +87,9 @@ Output:
     </div>
 
 To create a fixed navbar of links (don't forget to add 60px padding to the top of your page to compensate):
-(where $arrayOfLinks = array("Home"=>"location"))
+(where $leftArrayOfLinks = array("Link Name"=>"Link Href (Passed to URL::to)")). $rightArrayOfLinks is the same but floated right.
 
-    @nav(App Name, $arrayOfLinks)
+    @nav(App Name, [$leftArrayOfLinks], [$rightArrayOfLinks])
 
 Output (if you're on localhost):
 
