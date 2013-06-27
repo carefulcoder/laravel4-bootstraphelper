@@ -72,23 +72,39 @@ class BootstrapBladeCompiler extends BladeCompiler {
                     $rightBracket = strrpos($strArgs, ')');
                     $strArgs = trim(substr($strArgs, $leftBracket + 1, $rightBracket - ($leftBracket + 1)));
 
+                    $lastChar = '';
                     $bracketDepth = 0;
+                    $openingQuoteMark = '';
                     $chargs = str_split($strArgs);
                     $argArray = array('');
 
                     //go through letter by letter splitting arguments on commas
                     //only if we're not in a nested set of brackets
                     foreach ($chargs as $char) {
-                        if (in_array($char, array('(', '['))) {
-                            $bracketDepth++;
-                        } else if (in_array($char, array(')', ']'))) {
-                            $bracketDepth--;
-                        } else if ($char == ',' && $bracketDepth == 0) {
-                            $argArray[] = '';
-                            continue;
+
+                        if ($lastChar != '\\') {
+                            if (in_array($char, array('"', "'"))) {
+                                if ($openingQuoteMark == $char) {
+                                    $openingQuoteMark = ''; //closing quoted block
+                                } else if (!$openingQuoteMark) {
+                                    $openingQuoteMark = $char; // beginning quoted block
+                                } //if in a block and quote mark isn't the same then thats fine
+                            }
+                        }
+
+                        if (!$openingQuoteMark) {
+                            if (in_array($char, array('(', '['))) {
+                                $bracketDepth++;
+                            } else if (in_array($char, array(')', ']'))) {
+                                $bracketDepth--;
+                            } else if ($char == ',' && $bracketDepth == 0) {
+                                $argArray[] = '';
+                                continue;
+                            }
                         }
 
                         $argArray[count($argArray)-1] .= $char;
+                        $lastChar = $char;
                     }
 
                    if ($bracketDepth == 0) {

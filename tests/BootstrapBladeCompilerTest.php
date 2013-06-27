@@ -130,4 +130,25 @@ class BootstrapBladeCompilerTest extends PHPUnit_Framework_TestCase
         $output = self::$instance->compileString('@errors(array("bob", "bob2"))');
         $this->assertEquals(str_replace(' ', '', trim($expected)), str_replace(' ', '', trim($output)));
     }
+
+    /**
+     * Make sure things quoted in string literals aren't
+     * interpreted as delimiters or brackets etc.
+     */
+    public function testQuotedStrings()
+    {
+        $expected = '<?php if (is_array(array("b,ob","b,ob2"))): ?>
+                        <?php foreach(array("b,ob","b,ob2") as $error): ?>
+                            <div class="alert alert-danger">
+                                <?php echo e($error); ?><a class="close" data-dismiss="alert" href="#">&times;</a>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>';
+
+        //the below array breaks Blade! I'll create an issue / fix for it at some point
+        //but until then we'll use a slightly less punishing array that will work.
+        //$output = self::$instance->compileString('@errors(array("b(\\\'ob","b(ob2"))');
+        $output = self::$instance->compileString('@errors(array("b,ob","b,ob2"))');
+        $this->assertEquals(str_replace(' ', '', trim($expected)), str_replace(' ', '', trim($output)));
+    }
 }
